@@ -28,7 +28,6 @@ public class LoginView extends JFrame {
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.setBackground(new Color(245, 245, 245));
 
-        // HEADER con degradado
         JPanel panelHeader = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -70,12 +69,10 @@ public class LoginView extends JFrame {
 
         panelHeader.add(contenedorTitulo, BorderLayout.CENTER);
 
-        // FORMULARIO
         JPanel panelFormulario = new JPanel();
         panelFormulario.setBackground(new Color(245, 245, 245));
         panelFormulario.setLayout(null);
 
-        // Usuario
         JLabel lblUsuario = new JLabel("Usuario");
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 13));
         lblUsuario.setForeground(new Color(60, 60, 60));
@@ -91,7 +88,6 @@ public class LoginView extends JFrame {
         ));
         panelFormulario.add(txtUsuario);
 
-        // Contraseña
         JLabel lblClave = new JLabel("Contraseña");
         lblClave.setFont(new Font("Arial", Font.BOLD, 13));
         lblClave.setForeground(new Color(60, 60, 60));
@@ -107,7 +103,6 @@ public class LoginView extends JFrame {
         ));
         panelFormulario.add(txtClave);
 
-        // Botón Ingresar
         btnIngresar = new JButton("INGRESAR") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -137,7 +132,6 @@ public class LoginView extends JFrame {
         btnIngresar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelFormulario.add(btnIngresar);
 
-        // Info adicional
         JLabel lblInfo = new JLabel("<html><center>Usuario: Admin | Contraseña: 123<br>Usuario: Cajero1 | Contraseña: 123</center></html>");
         lblInfo.setFont(new Font("Arial", Font.PLAIN, 11));
         lblInfo.setForeground(new Color(120, 120, 120));
@@ -150,11 +144,9 @@ public class LoginView extends JFrame {
 
         add(panelPrincipal);
 
-        // Eventos
         btnIngresar.addActionListener(e -> autenticar());
         txtClave.addActionListener(e -> autenticar());
 
-        // Focus al campo usuario
         SwingUtilities.invokeLater(() -> txtUsuario.requestFocus());
     }
 
