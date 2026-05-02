@@ -6,7 +6,6 @@ public class Cliente {
     private String telefono;
     private String direccion;
 
-    // Constructor completo
     public Cliente(int idCliente, String nombre, String telefono, String direccion) {
         this.idCliente = idCliente;
         this.nombre = nombre;
@@ -14,14 +13,12 @@ public class Cliente {
         this.direccion = direccion;
     }
 
-    // Constructor sin ID
     public Cliente(String nombre, String telefono, String direccion) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
     }
 
-    // Getters y Setters
     public int getIdCliente() { return idCliente; }
     public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
 
