@@ -7,7 +7,6 @@ public class Empleado {
     private String telefono;
     private String cargo;
 
-    // Constructor completo
     public Empleado(int idEmpleado, String nombre, String dni, String telefono, String cargo) {
         this.idEmpleado = idEmpleado;
         this.nombre = nombre;
@@ -16,7 +15,6 @@ public class Empleado {
         this.cargo = cargo;
     }
 
-    // Constructor sin ID
     public Empleado(String nombre, String dni, String telefono, String cargo) {
         this.nombre = nombre;
         this.dni = dni;
@@ -24,7 +22,6 @@ public class Empleado {
         this.cargo = cargo;
     }
 
-    // Getters y Setters
     public int getIdEmpleado() { return idEmpleado; }
     public void setIdEmpleado(int idEmpleado) { this.idEmpleado = idEmpleado; }
 
