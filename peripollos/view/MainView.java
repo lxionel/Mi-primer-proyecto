@@ -13,8 +13,8 @@ public class MainView extends JFrame {
     private Usuario usuarioActual;
     private ProductoDAO productoDAO;
     private PedidoDAO pedidoDAO;
-    private CajaDAO cajaDAO; // <-- AÑADIDO
-    private Caja cajaActiva; // <-- AÑADIDO
+    private CajaDAO cajaDAO; 
+    private Caja cajaActiva; 
 
     private JLabel lblUsuario;
     private JButton btnNuevoPedido;
@@ -26,23 +26,23 @@ public class MainView extends JFrame {
     private DefaultTableModel modeloTabla;
     private JTable tablaDetalles;
     private JLabel lblTotal;
-    private JLabel lblEstadoCaja; // <-- AÑADIDO
+    private JLabel lblEstadoCaja; 
 
     private JPanel panelProductos;
-    private JPanel panelIzquierdo; // <-- AÑADIDO
-    private JPanel panelDerecho; // <-- AÑADIDO
-    private JSplitPane splitPane; // <-- AÑADIDO
+    private JPanel panelIzquierdo; 
+    private JPanel panelDerecho; 
+    private JSplitPane splitPane; 
 
     public MainView(Usuario usuario) {
         this.usuarioActual = usuario;
         this.productoDAO = new ProductoDAO();
         this.pedidoDAO = new PedidoDAO();
-        this.cajaDAO = new CajaDAO(); // <-- AÑADIDO
+        this.cajaDAO = new CajaDAO(); 
 
         inicializarComponentes();
         cargarProductos();
         nuevoPedido();
-        actualizarEstadoCaja(); // <-- AÑADIDO
+        actualizarEstadoCaja();
     }
 
     private void inicializarComponentes() {
@@ -54,7 +54,6 @@ public class MainView extends JFrame {
         JPanel panelPrincipal = new JPanel(new BorderLayout());
         panelPrincipal.setBackground(new Color(248, 249, 250));
 
-        // ===== HEADER CON DEGRADADO =====
         JPanel panelHeader = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -76,7 +75,6 @@ public class MainView extends JFrame {
         JPanel panelUsuario = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
         panelUsuario.setOpaque(false);
 
-        // BOTONES SOLO PARA ADMINISTRADOR
         if (usuarioActual.esAdministrador()) {
             btnReportes = new JButton("📊 Reportes");
             btnReportes.setFont(new Font("Arial", Font.BOLD, 13));
@@ -102,13 +100,12 @@ public class MainView extends JFrame {
             panelUsuario.add(btnCaja);
         }
 
-        // BLOQUE AÑADIDO
         lblEstadoCaja = new JLabel("Cargando...");
         lblEstadoCaja.setFont(new Font("Arial", Font.BOLD, 14));
         lblEstadoCaja.setForeground(Color.WHITE);
         panelUsuario.add(lblEstadoCaja);
         panelUsuario.add(Box.createHorizontalStrut(15));
-        // FIN BLOQUE AÑADIDO
+   
 
         JPanel infoUsuario = new JPanel();
         infoUsuario.setLayout(new BoxLayout(infoUsuario, BoxLayout.Y_AXIS));
@@ -144,12 +141,12 @@ public class MainView extends JFrame {
         panelHeader.add(lblTitulo, BorderLayout.WEST);
         panelHeader.add(panelUsuario, BorderLayout.EAST);
 
-        // ===== PANEL CENTRAL =====
+      
         JPanel panelCentral = new JPanel(new BorderLayout(15, 15));
         panelCentral.setBackground(new Color(248, 249, 250));
         panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Panel izquierdo - MENÚ
+  
         panelIzquierdo = new JPanel(new BorderLayout(0, 15)); // <-- MODIFICADO
         panelIzquierdo.setBackground(Color.WHITE);
         panelIzquierdo.setBorder(BorderFactory.createCompoundBorder(
@@ -171,10 +168,10 @@ public class MainView extends JFrame {
         panelIzquierdo.add(lblMenu, BorderLayout.NORTH);
         panelIzquierdo.add(scrollProductos, BorderLayout.CENTER);
 
-        // Panel derecho - PEDIDO (ver parte 2)
-        panelDerecho = crearPanelPedido(); // <-- MODIFICADO
+       
+        panelDerecho = crearPanelPedido();
 
-        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelIzquierdo, panelDerecho); // <-- MODIFICADO
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelIzquierdo, panelDerecho); 
         splitPane.setDividerLocation(620);
         splitPane.setDividerSize(8);
         splitPane.setBorder(null);
@@ -215,7 +212,7 @@ public class MainView extends JFrame {
         panelSuperiorDerecho.add(lblPedido, BorderLayout.WEST);
         panelSuperiorDerecho.add(btnNuevoPedido, BorderLayout.EAST);
 
-        // Tabla
+   
         String[] columnas = {"Producto", "Precio Unit.", "Cantidad", "Subtotal"};
         modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
@@ -332,7 +329,7 @@ public class MainView extends JFrame {
                 panelProductos.add(btnProducto);
             }
 
-            // Actualizar la vista del panel
+          
             panelProductos.revalidate();
             panelProductos.repaint();
 
@@ -447,12 +444,12 @@ public class MainView extends JFrame {
                 reporte.append("  No hay pedidos registrados hoy.\n");
             } else {
                 for (Pedido pedido : pedidosHoy) {
-                    // CORREGIDO: Son pedido.id(), pedido.total() y pedido.usuario().nombre()
+                  
                     reporte.append("  Pedido #").append(pedido.id());
                     reporte.append(" - S/ ").append(String.format("%.2f", pedido.total()));
                     reporte.append(" - ").append(pedido.usuario().nombre()).append("\n");
 
-                    // Cargar detalles del pedido desde la BD
+                    
                     try {
                         String sqlDetalles = "SELECT pr.nombre, dp.cantidad, dp.subtotal " +
                                 "FROM detalle_pedido dp " +
@@ -515,10 +512,10 @@ public class MainView extends JFrame {
                 opciones[0]);
 
         try {
-            // Verificamos si ya hay una caja abierta
+            
             Caja cajaAbierta = cajaDAO.obtenerCajaAbierta();
 
-            if (seleccion == 0) { // --- ABRIR CAJA ---
+            if (seleccion == 0) { 
                 if (cajaAbierta != null) {
                     JOptionPane.showMessageDialog(this,
                             "Ya existe una caja abierta por " + cajaAbierta.usuario().nombre() + ".\n" +
@@ -550,7 +547,7 @@ public class MainView extends JFrame {
                     }
                 }
 
-            } else if (seleccion == 1) { // --- CERRAR CAJA ---
+            } else if (seleccion == 1) { 
                 if (cajaAbierta == null) {
                     JOptionPane.showMessageDialog(this,
                             "No hay ninguna caja abierta para cerrar.",
@@ -559,9 +556,9 @@ public class MainView extends JFrame {
                     return;
                 }
 
-                // Obtenemos los totales
+               
                 double montoInicial = cajaAbierta.montoInicial();
-                double totalVentas = pedidoDAO.obtenerTotalVentasDelDia(); // Asumiendo que esto trae ventas DESDE la apertura de caja
+                double totalVentas = pedidoDAO.obtenerTotalVentasDelDia();
                 double totalEsperado = montoInicial + totalVentas;
 
                 String montoFinalStr = JOptionPane.showInputDialog(this,
@@ -576,13 +573,13 @@ public class MainView extends JFrame {
                     try {
                         double montoFinalContado = Double.parseDouble(montoFinalStr);
 
-                        // Actualizamos el objeto caja y lo cerramos
+                      
                         cajaAbierta.cerrarCaja(montoFinalContado);
 
                         boolean exito = cajaDAO.cerrarCaja(cajaAbierta);
 
                         if (exito) {
-                            // Generamos el reporte de cierre
+                            
                             String reporte = cajaAbierta.generarDocumento();
                             reporte = reporte.replace("Monto Final:   S/ " + String.format("%.2f", montoFinalContado),
                                     "Monto Contado: S/ " + String.format("%.2f", montoFinalContado) + "\n" +
@@ -613,7 +610,7 @@ public class MainView extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
 
-        actualizarEstadoCaja(); // <-- AÑADIDO (Actualiza la UI después de abrir/cerrar)
+        actualizarEstadoCaja(); 
     }
 
     private void cerrarSesion() {
@@ -633,42 +630,35 @@ public class MainView extends JFrame {
         component.setEnabled(enabled);
         if (component instanceof Container) {
             for (Component c : ((Container) component).getComponents()) {
-                // Dejamos los botones de admin siempre activos
+                
                 if (c == btnReportes || c == btnCaja || c == btnCerrarSesion) {
                     continue;
                 }
                 setComponentesEnabled(c, enabled);
             }
         }
-        // Excepción: El botón "Caja" siempre debe estar habilitado
+  
         if (btnCaja != null) {
             btnCaja.setEnabled(true);
         }
     }
 
-    /**
-     * Verifica en la BD si hay una caja abierta y actualiza la UI.
-     * Habilita o deshabilita los páneles de venta.
-     */
     private void actualizarEstadoCaja() {
         try {
             cajaActiva = cajaDAO.obtenerCajaAbierta();
 
             if (cajaActiva != null) {
-                // --- CAJA ABIERTA ---
+      
                 lblEstadoCaja.setText(String.format("CAJA ABIERTA (Fondo: S/ %.2f)", cajaActiva.montoInicial()));
-                lblEstadoCaja.setForeground(new Color(144, 238, 144)); // Verde claro
+                lblEstadoCaja.setForeground(new Color(144, 238, 144)); 
 
-                // Habilitamos los páneles de venta
                 setComponentesEnabled(panelIzquierdo, true);
                 setComponentesEnabled(panelDerecho, true);
 
             } else {
-                // --- CAJA CERRADA ---
                 lblEstadoCaja.setText("CAJA CERRADA");
-                lblEstadoCaja.setForeground(new Color(240, 128, 128)); // Rojo claro
+                lblEstadoCaja.setForeground(new Color(240, 128, 128));
 
-                // Deshabilitamos los páneles de venta
                 setComponentesEnabled(panelIzquierdo, false);
                 setComponentesEnabled(panelDerecho, false);
             }
@@ -678,5 +668,4 @@ public class MainView extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al verificar estado de caja: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    // --- FIN DE MÉTODOS AÑADIDOS ---
 }
